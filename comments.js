@@ -1,68 +1,43 @@
-// Create a web server 
-// Run server on port 3000
-// Use express and body-parser
-// Use the comments array
-// Use GET, POST, PUT, DELETE
+// Create a web server
 
+// 1. Import the express library
 const express = require('express');
-const bodyParser = require('body-parser');
+
+// 2. Create an instance of an express app
 const app = express();
 
-app.use(bodyParser.json());
-
-const comments = [
-    {id: 1, comment: "This is a comment"},
-    {id: 2, comment: "This is another comment"},
-    {id: 3, comment: "This is yet another comment"}
-];
-
-app.get('/', function(req, res){
-    res.send('Hello World!');
+// 3. Create a route handler
+app.get('/comments', (req, res) => {
+    res.send([
+        {
+            id: 1,
+            username: 'tickle122',
+            comment: 'I love cheese'
+        },
+        {
+            id: 2,
+            username: 'grumpy19',
+            comment: 'I hate everything'
+        },
+        {
+            id: 3,
+            username: 'happyamy2016',
+            comment: 'I love everything'
+        },
+        {
+            id: 4,
+            username: 'cooljmessy',
+            comment: 'Javascript rocks!'
+        },
+        {
+            id: 5,
+            username: 'weegembump',
+            comment: 'I love lamp'
+        }
+    ])
 });
 
-app.get('/comments', function(req, res){
-    res.send(comments);
-});
-
-app.get('/comments/:id', function(req, res){
-    const comment = comments.find(function(comment){
-        return comment.id === parseInt(req.params.id);
-    });
-    if(!comment) res.status(404).send('The comment with the given ID was not found');
-    res.send(comment);
-});
-
-app.post('/comments', function(req, res){
-    const comment = {
-        id: comments.length + 1,
-        comment: req.body.comment
-    };
-    comments.push(comment);
-    res.send(comment);
-});
-
-app.put('/comments/:id', function(req, res){
-    const comment = comments.find(function(comment){
-        return comment.id === parseInt(req.params.id);
-    });
-    if(!comment) res.status(404).send('The comment with the given ID was not found');
-
-    comment.comment = req.body.comment;
-    res.send(comment);
-});
-
-app.delete('/comments/:id', function(req, res){
-    const comment = comments.find(function(comment){
-        return comment.id === parseInt(req.params.id);
-    });
-    if(!comment) res.status(404).send('The comment with the given ID was not found');
-
-    const index = comments.indexOf(comment);
-    comments.splice(index, 1);
-
-    res.send(comment);
-});
-
-app.listen(3000, function(){
-    console.log('Listening on port 3000...');
+// 4. Have the app listen on a port
+app.listen(9090, () => {
+    console.log('Server started on port 9090');
 });
